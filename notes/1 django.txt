@@ -1,0 +1,136 @@
+python3 -m venv env_name
+create environment
+
+python manage.py runserver
+run server
+
+source venv/bin/activate
+activate environment
+
+rm -rf venv
+delete environment
+
+django-admin startproject myproject .
+for project creation
+
+
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+FOLDER STRUCTURE
+
+OUTER MAIN APP:-
+MANAGE.py -  commandline tool like startserver , create superuser
+
+INNER FOLDER:-
+SETTINGS.PY - middlewase security and link installed apps we django
+URL's.PY - for routing 
+ASGI gateway interface for ascrhonous server
+WSGI gateway for tradition server productino development
+ 
+-------------------------------
+
+APPS FOLDER STRUCTURE:-
+MIGRATION - database schema change
+INIT_py - mask folder or to create python package
+ADMIN.py - jango adminpanel config\
+APPS.py -  apps config
+MODELS.PY - database model like tables
+TESTS.PY - unit testing
+VIEWS.PY - functions , classes
+MANAGE.PY - 
+
+
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+URL BASICS
+
+1 ----------- Function Method-----------
+APPS FOLDER IN VIEW 
+-from django.http import HttpResponse
+ - def home(request):
+    return HttpResponse("Welcome AMAN")
+
+PROJECT FOLDER URL
+ -
+from blogs.views import home , sum    //// IMPORTS
+# or from blogs import views :     path('', home , name="home")
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('blogs', home , name='home'),
+    path('sum', sum , name='home'),
+]
+
+
+
+
+2  -------------URL CNFIG--------------
+
+-- IN app FOLDER create URL.PY then
+    COPY PASTE THE URL's  PATTERN
+  
+    from . import views
+    from django.urls import path
+
+
+urlpatterns = [
+    # path('admin/', admin.site.urls),
+    path('', views.home , name='home'),
+    path('sum/', views.sum , name='sum'),
+]
+
+
+IN porject folder add INCLUDE in import  in django's url  
+# # ---------------URL CONFIG----------------
+from django.contrib import admin
+from django.urls import path ,include
+
+urlpatterns = [
+    # path('admin/', admin.site.urls),
+    path('',include('view_urlbasics.urls')),
+]
+
+
+
+
+
+   path('parameter_path/<int:user_id>/', views.parameter_path , name='parameter_path'),
+    path('parameter_pathh/<str:user_name>/<int:user_ids>/',views.parameter_pathh,name='parameter_pathh'),
+    
+    
+
+    # using re_path(Regex Path)
+# used for expressions complex patterns when need string,symbol,numbers
+
+    # only numbers
+    re_path(r'^re_path/(?P<year>[0-9]{4})/$',views.re_path,name="re_path"),
+
+    # for numbers,symbol etc
+    re_path(r'^re_path1/(?P<bro_id>[a-zA-Z0-9_!@\-]+)/$',views.re_path1, name="re_path2"),
+
+
+
+
+
+
+    # using **kwargs
+
+     # for numbers,symbol etc
+    path('kwargs/<str:username>/<int:age>/',views.details,name="Kwargs"),
+
+    # if one argument is missing
+
+    path('fullinfo/<str:username>/<int:age>/',views.detailss,name="username"),
+
+    # ONLY username (age will be missing)
+    path('fullinfo/<str:username>/', views.detailss),
+]
+
+
+
+
+
+
+

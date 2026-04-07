@@ -1,0 +1,24 @@
+my_hotel_project/           <-- 1. Project Root (The main folder)
+├── venv/                   <-- 2. Virtual Environment (Your "Safe Box")
+├── manage.py               <-- 3. The Control Center (Command-line tool)
+│
+├── hotel_config/           <-- 4. THE PROJECT (The "Brain")
+│   ├── __init__.py
+│   ├── settings.py         <-- Master settings (Database, Apps list)
+│   ├── urls.py             <-- Master URL map (The "Main Reception")
+│   └── wsgi.py/asgi.py     <-- (Don't touch these yet - for hosting)
+│
+├── rooms/                  <-- 5. THE APP (The "Room Catalog" Feature)
+│   ├── migrations/         <-- Database history (Django handles this)
+│   ├── __init__.py
+│   ├── admin.py            <-- Register models to see them in /admin/
+│   ├── apps.py
+│   ├── models.py           <-- Data structure (Room type, Price, AC)
+│   ├── tests.py
+│   ├── views.py            <-- Logic (e.g., "Show all empty rooms")
+│   └── urls.py             <-- (Create this!) Local app URLs
+│
+└── templates/              <-- 6. THE DESIGN (HTML Files)
+    └── rooms/              <-- App-specific HTML folder
+        ├── list_rooms.html
+        └── book_room.html
