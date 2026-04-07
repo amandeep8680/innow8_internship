@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title %} Inheritance & Static files {%endblock%}</title>
+    
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}"></head>
+<body>
+    {%include "nav_bar.html" %}
+
+    <h1>Inheritance & Static files</h1>
+    <div class="main">
+         {% block content %} 
+    <h1>Base Page</h1>
+    {%endblock%}
+    </div>
+   
+    <footer>
+        {% block footer %}
+    <p> this is a Base page Footer </p>
+    {%endblock%}
+    </footer>
+    
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

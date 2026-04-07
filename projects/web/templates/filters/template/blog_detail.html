@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template filter</title>
+</head>
+<body>
+    <h1>
+        This is Filter Template
+    </h1>
+            <!--  ------------------text filter -->
+    <!-- return render(request,"blog_detail.html",{"post":post}) -->
+        <!-- whatever written in string is written to call ex. post -->
+    <P><B>Title (Normal) :</B> {{Post.title}} </P>
+    <P><B>Title (Uppercase) : </B> {{Post.title|upper}} </P>
+    <P><B>Title (Lowercase) : </B> {{Post.title|lower}} </P>
+    <P><B>Title (Capital First) : </B> {{Post.title|capfirst}} </P>
+    <P><B>Title (Truncate Characters 10) : </B> {{Post.title|truncatechars:10}} </P>
+    <P><B>Title (Truncate Words 2) : </B> {{Post.title|truncatewords:2}} </P>
+    <P><B>Title (Line Break ) : </B> {{Post.title|linebreaks}} </P>
+
+
+
+    <!-- Number Filters -->
+
+<hr>
+<p>original Amount : {{Post.price}}</p>
+<p>After Addition of 150 is : {{Post.price|add:150}}</p>
+
+
+<!-- divison -->
+{% if Post.number|divisibleby:2%}
+<p> {{Post.number}} is even</p>
+{% else %}
+<p>{{Post.number}} is odd.</p>
+{% endif%}
+
+
+
+<!-- List Filter  -->
+ <hr>
+<P> Tags are : {{Post.tags}}</P>
+<P> First Tag is : {{Post.tags|first}}</P>
+<P> Last Tag is  : {{Post.tags|last}}</P>
+<P> Slice tag is  : {{Post.tags|slice:":"}}</P>
+<P> Join Tag is  : {{Post.tags|join:" , , "}}</P>
+
+
+
+
+
+<!-- Yes/No or Singlular Plural -->
+
+<hr>
+<P>Author Available? : {{Post.author|yesno:"Yes,no,maybe"}}</P>
+
+
+
+<!-- Plural Singular -->
+
+<p>Comments Count : {{Post.comment_count}} Comment{{Post.comment_count|pluralize}}</p>
+
+
+
+<!-- Date time   Format -->
+<hr>
+<P>Post Crearted at : {{Post.created_at|date:"D d M y"}}</P>
+<P>Post Crearted at : {{Post.created_at|time:"H : i"}}</P>
+
+
+
+<!-- Url Incoding -->
+
+<hr>
+<p>Title Encoding : {{Post.title|urlencode}}</p>
+<P>Float Formatting : {{2288783.725637|float:3</P>
+
+
+
+</body>
+</html>

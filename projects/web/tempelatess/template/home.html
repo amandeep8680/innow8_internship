@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amandeep | Innow8 Apps Intern</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Background Animation */
+        .background-blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.15;
+            animation: move 10s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(10%, 10%); }
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(#3b82f6, #8b5cf6);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            border: 4px solid #1e293b;
+        }
+
+        h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(to right, #60a5fa, #a78bfa);
+        
+        /* Add both of these */
+        -webkit-background-clip: text; /* For Chrome, Safari, Edge */
+        background-clip: text;         /* Standard version */
+        
+        -webkit-text-fill-color: transparent;
+}
+
+        .role {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #3b82f6;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.5);
+        }
+
+        .footer-text {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="background-blob"></div>
+
+    <div class="container">
+        <div class="profile-img">A</div>
+        <h1>Amandeep</h1>
+        <p class="role">Software Development Intern</p>
+        
+        <div class="badge">
+            Currently working @ <strong>Innow8 Apps</strong>
+        </div>
+
+        <p style="color: #cbd5e1; margin-bottom: 2rem; line-height: 1.6;">
+            Building the next generation of web applications with modern technologies. Passionate about coding, problem-solving, and clean UI.
+        </p>
+
+        <a href="mailto:your-email@example.com" class="btn">Let's Connect</a>
+
+        <div class="footer-text">
+            &copy; 2026 Amandeep | Portfolio
+        </div>
+    </div>
+
+</body>
+</html>
