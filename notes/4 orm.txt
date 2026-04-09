@@ -1,0 +1,15 @@
+Object-Relational Mapping.
+
+it's way to interact with your database using Python code instead
+of writing SQL queries manually
+
+Benefits of ORM - Object-Relational Mapping
+less SQL no raw SQL
+database independent - it;s works on all databases
+secure  - no chances of sql injection
+readable
+
+
+
+
+

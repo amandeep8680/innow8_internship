@@ -1,19 +1,25 @@
 python3 -m venv env_name
 create environment
 
-python manage.py runserver
-run server
-
 source venv/bin/activate
 activate environment
 
+pip install django
+install django in env
+
 rm -rf venv
 delete environment
+
+python manage.py runserver
+run server
+
 
 django-admin startproject myproject .
 for project creation
 
 
+django-admin startapp myproject .
+for app creation
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 FOLDER STRUCTURE
