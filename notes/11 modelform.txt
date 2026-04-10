@@ -1,0 +1,2 @@
+ModelForm is a helper class that automatically creates a form based on a database model. 
+It saves you from manually defining form fields.

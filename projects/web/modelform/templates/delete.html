@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Delete Confirmation</h1>
+    <p>Are you sure to delete {{forms.name}}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button name="Submit">Delete</button>
+        <button"><a href="{% url 'show_list'%}">Cancel</a></button>
+    </form>
+</body>
+
+</html>
+
