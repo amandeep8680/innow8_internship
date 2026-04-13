@@ -1,2 +1,102 @@
 ModelForm is a helper class that automatically creates a form based on a database model. 
 It saves you from manually defining form fields.
+
+
+models.py
+from django.db import models
+
+# Create your models here.
+class Student(models.Model):
+    name = models.CharField(max_length=30)
+    age = models.IntegerField(default=18)
+    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+
+
+
+forms.py
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['name','age','email']
+
+    # def clean_age(self):
+    #     age=self.cleaned_data.get('age')
+    #     if age < 18:
+    #         raise forms.ValidationError("Age must by 18+")
+    #     return age
+    
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     name = cleaned_data.get('name')
+    #     email = cleaned_data.get('email')
+
+    #     if name and email:
+    #         if name.lower() == "admin" and "gmail" in email:
+    #             raise forms.ValidationError("Admin cannot use Gmail")
+
+    #     return cleaned_data
+
+
+
+
+
+
+
+
+
+
+
+view.py
+from django.shortcuts import render,  get_object_or_404 , redirect
+from .form import StudentForm
+from .models import Student
+
+# Create your views here.
+def create_student(request):
+    form = StudentForm()
+    if request.method =='POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request,'student_success.html')
+        # else:
+        #     print(form.errors)
+
+    return render(request,'student_form.html' ,{'forms':form})
+
+
+def show_list(request):
+    lst = Student.objects.all()
+    return render(request , 'show_list.html',{'lsst':lst})
+ 
+
+def student_detail(request, pk):
+    student = get_object_or_404(Student,pk=pk)
+    return render(request,'student_detail.html',{'lst':student})
+
+
+def update(request , pk):
+    student = get_object_or_404(Student,pk=pk)
+    if request.method=='POST': 
+        form = StudentForm(request.POST,instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('show_list')
+    else:
+            form = StudentForm(instance=student)   
+    return render(request,'student_form.html' ,{'form':form})
+
+
+def delete(request , pk):
+    student = get_object_or_404(Student,pk=pk)
+    if request.method=='POST': 
+        student.delete()
+        return redirect('show_list')
+    return render(request,'delete.html',{'forms':student})
