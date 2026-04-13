@@ -73,12 +73,14 @@ print(missing())
 
 
 # 5. compress string
-s='aabbbcdddk'
+s='aabbssbcdddkss'
 freq={}
 for c in s:
     freq[c]=freq.get(c,0)+1
 result = "".join(f"{char}{count}" for char , count in freq.items())
 print (result)
+print(freq)
+
 
 
 

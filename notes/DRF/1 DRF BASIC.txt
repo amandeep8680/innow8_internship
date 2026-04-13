@@ -1,0 +1,15 @@
+Django Rest Framework is an extension of django that makes building APIs easier. 
+Helps Django models into RESTful API.
+
+**Serialization** 
+Convert complex data like django models or querysets into json and xml format
+
+**Views**
+Define views that handle api request and responses.
+
+**URL Routing**
+Maps URLs to API views so clients can acess them.
+
+
+
+

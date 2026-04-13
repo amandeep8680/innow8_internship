@@ -1,6 +1,13 @@
 python3 -m venv env_name
 create environment
 
+lsof -i :8000
+for ports
+
+
+kill -9 port_number
+for delte 
+
 source venv/bin/activate
 activate environment
 

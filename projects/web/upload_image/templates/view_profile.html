@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Your Profiles</h2>
+
+<div class="profile-grid">
+    <!-- Assuming 'profiles' is your list of objects, not 'form' -->
+    {% for profile in profiles %}
+    <div class="profile-card">
+        <div class="profile-img-container">
+            <img src="{{ profile.image.url }}" alt="Profile Pic">
+        </div>
+        <h3>{{ profile.name }}</h3>
+        <a href="{% url 'delete' profile.pk %}" class="btn-delete">Delete Profile</a>
+    </div>
+    {% empty %}
+    <p class="text-center w-100">No profile photos found.</p>
+    {% endfor %}
+</div>
+{% endblock %}
