@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List </title>
+</head>
+<body>
+    
+</body>
+</html><!DOCTYPE html>
+<html>
+<body>
+
+<h1>Book List</h1>
+
+<!-- Add Book Form -->
+<form id="bookForm">
+    <input type="text" id="title" placeholder="Title">
+    <input type="text" id="author" placeholder="Author">
+    <input type="number" id="year" placeholder="Year">
+    <button type="submit">Add Book</button>
+</form>
+
+<hr>
+
+<ul id="bookList"></ul>
+
+<script>
+
+// 🔹 GET all books
+function loadBooks() {
+    fetch('/books/')
+    .then(res => res.json())
+    .then(data => {
+        let list = document.getElementById('bookList');
+        list.innerHTML = "";
+
+        data.forEach(book => {
+            let li = document.createElement('li');
+
+            li.innerHTML = `
+                ${book.title} - ${book.author}
+                <button onclick="deleteBook(${book.id})">Delete</button>
+                <button onclick="updateBook(${book.id})">Update</button>
+            `;
+
+            list.appendChild(li);
+        });
+    });
+}
+
+// 🔹 POST (Add Book)
+document.getElementById("bookForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    fetch('/books/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: document.getElementById("title").value,
+            author: document.getElementById("author").value,
+            published_year: document.getElementById("year").value
+        })
+    })
+    .then(res => res.json())
+    .then(() => {
+        loadBooks();
+    });
+});
+
+// 🔹 DELETE
+function deleteBook(id){
+    fetch(`/book/${id}/`, {
+        method: 'DELETE'
+    })
+    .then(() => loadBooks());
+}
+
+// 🔹 UPDATE (simple prompt)
+function updateBook(id){
+    let newTitle = prompt("Enter new title:");
+    let newAuthor = prompt("Enter author:");
+    let newYear = prompt("Enter year:");
+
+    fetch(`/book/${id}/`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: newTitle,
+            author: newAuthor,
+            published_year: newYear
+        })
+    })
+    .then(res => res.json())
+    .then(() => loadBooks());
+}
+// Load data on page load
+loadBooks();
+
+</script>
+
+</body>
+</html>
