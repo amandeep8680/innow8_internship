@@ -9,7 +9,4 @@ Define views that handle api request and responses.
 
 **URL Routing**
 Maps URLs to API views so clients can acess them.
-
-
-
-
+<!--  -->

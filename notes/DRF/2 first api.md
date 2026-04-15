@@ -104,4 +104,4 @@ def book_detail(request, pk):
     # ✅ DELETE → Delete book
     elif request.method == 'DELETE':
         book.delete()
-        return Response({'message': 'Book Deleted Successfully'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': 'Book Deleted Successfully'}, status=status.HTTP_204_NO_CONTENT)    
