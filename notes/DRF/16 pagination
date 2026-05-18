@@ -1,0 +1,389 @@
+# Pagination in DRF
+
+Pagination ka matlab:
+
+> Large data ko small pages/chunks me bhejna.
+
+Example:
+
+- Instagram feed
+- YouTube comments
+- Amazon products list
+
+---
+
+# Without Pagination
+
+```python
+GET /products/
+```
+
+Response:
+
+```json
+[
+   {},
+   {},
+   {},
+   ...
+   10000 items
+]
+```
+
+Problem:
+
+- heavy response
+- slow API
+- frontend lag
+- high bandwidth usage
+
+---
+
+# With Pagination
+
+        ```python
+        GET /products/
+        ```
+
+        Response:
+
+        ```json
+        {
+            "count": 100,
+            "next": "http://127.0.0.1:8000/products/?page=2",
+            "previous": null,
+            "results": [
+                {},
+                {},
+                {}
+            ]
+        }
+        ```
+
+        ---
+
+# DRF Pagination Flow
+
+        ```text
+        Request
+        ↓
+        Queryset
+        ↓
+        Pagination Class
+        ↓
+        paginate_queryset()
+        ↓
+        Serializer
+        ↓
+        get_paginated_response()
+        ↓
+        Final Response
+        ```
+
+        ---
+
+# Types of Pagination in DRF
+
+1. PageNumberPagination
+2. LimitOffsetPagination
+3. CursorPagination
+
+---
+
+# 1. PageNumberPagination
+
+Most common pagination.
+
+URL:
+
+```python
+/products/?page=2
+```
+
+Meaning:
+
+> Page number 2 bhejo.
+
+---
+
+# Global Pagination Setup
+
+## settings.py
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+
+    'PAGE_SIZE': 5
+}
+```
+
+---
+
+# Response
+
+```json
+{
+    "count": 20,
+    "next": "http://127.0.0.1:8000/products/?page=2",
+    "previous": null,
+    "results": []
+}
+```
+
+---
+
+# Important Fields
+
+| Field | Meaning |
+|---|---|
+| count | total records |
+| next | next page url |
+| previous | previous page url |
+| results | actual data |
+
+---
+
+# 2. LimitOffsetPagination
+
+SQL LIMIT/OFFSET jaisa.
+
+URL:
+
+```python
+/products/?limit=5&offset=10
+```
+
+Meaning:
+
+```text
+10 records skip karo
+next 5 bhejo
+```
+
+---
+
+# Setup
+
+## settings.py
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.LimitOffsetPagination'
+}
+```
+
+---
+
+# Response
+
+```json
+{
+    "count": 100,
+    "next": "http://127.0.0.1:8000/products/?limit=5&offset=15",
+    "previous": "http://127.0.0.1:8000/products/?limit=5&offset=5",
+    "results": []
+}
+```
+
+---
+
+# 3. CursorPagination
+
+Used in large scalable apps.
+
+Examples:
+
+- Instagram
+- Twitter/X
+- Facebook
+
+---
+
+# Problem with PageNumberPagination
+
+Agar new data insert ho jaye:
+
+- duplicate aa sakta hai
+- data shift ho sakta hai
+
+---
+
+# CursorPagination Solution
+
+Cursor use hota hai instead of page number.
+
+URL:
+
+```python
+/products/?cursor=cD00ODY
+```
+
+---
+
+# Pagination Class Example
+
+```python
+from rest_framework.pagination import CursorPagination
+
+class MyPagination(CursorPagination):
+    page_size = 5
+    ordering = '-created'
+```
+
+---
+
+# Use in View
+
+```python
+class ProductListView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    pagination_class = MyPagination
+```
+
+---
+
+# Per View Pagination
+
+```python
+from rest_framework.pagination import PageNumberPagination
+
+class MyPagination(PageNumberPagination):
+    page_size = 3
+```
+
+---
+
+# View
+
+```python
+class ProductListView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    pagination_class = MyPagination
+```
+
+---
+
+# Custom Page Size by User
+
+```python
+class MyPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'size'
+```
+
+URL:
+
+```python
+/products/?page=1&size=20
+```
+
+---
+
+# Max Page Size
+
+```python
+class MyPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'size'
+    max_page_size = 50
+```
+
+---
+
+# Internal Methods
+
+```python
+paginate_queryset()
+```
+
+- queryset ko slice karta hai
+
+---
+
+```python
+get_paginated_response()
+```
+
+- final paginated response banata hai
+
+---
+
+# Full Example
+
+```python
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import generics
+from .models import Product
+from .serializers import ProductSerializer
+
+class MyPagination(PageNumberPagination):
+    page_size = 2
+
+class ProductListView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    pagination_class = MyPagination
+```
+
+---
+
+# Request
+
+```python
+/products/
+```
+
+---
+
+# Response
+
+```json
+{
+    "count": 10,
+    "next": "http://127.0.0.1:8000/products/?page=2",
+    "previous": null,
+    "results": [
+        {
+            "id":1,
+            "name":"Laptop"
+        },
+        {
+            "id":2,
+            "name":"Mouse"
+        }
+    ]
+}
+```
+
+---
+
+# Why Use Pagination?
+
+- fast APIs
+- less server load
+- less bandwidth
+- scalable APIs
+- better frontend performance
+
+---
+
+# Production Usage
+
+| Pagination Type | Use |
+|---|---|
+| PageNumberPagination | simple apps |
+| LimitOffsetPagination | SQL style APIs |
+| CursorPagination | large scalable apps |
+
+---
+
+# One Line Summary
+
+```text
+Pagination = large queryset ko small pages me divide karke bhejna
+```

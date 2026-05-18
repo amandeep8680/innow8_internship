@@ -1,0 +1,243 @@
+# 23. Search via REST API
+
+## Import
+
+```python
+from rest_framework.filters import SearchFilter
+```
+
+---
+
+## Model
+
+```python
+from django.db import models
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+
+class Product(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.IntegerField()
+
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE
+    )
+```
+
+---
+
+## Serializer
+
+```python
+from rest_framework import serializers
+from .models import Product
+
+class ProductSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = "__all__"
+```
+
+---
+
+## View
+
+```python
+from rest_framework import generics
+from rest_framework.filters import SearchFilter
+from rest_framework.permissions import IsAuthenticated
+
+from .models import Product
+from .serializers import ProductSerializer
+
+
+class ProductListView(generics.ListAPIView):
+
+    queryset = Product.objects.all()
+
+    serializer_class = ProductSerializer
+
+    ## Authentication
+    permission_classes = [IsAuthenticated]
+
+    ## Enable Search
+    filter_backends = [SearchFilter]
+
+    ## Search Fields
+    search_fields = [
+        'title',
+        'description',
+        'category__name'
+    ]
+```
+
+---
+
+## URL
+
+```python
+from django.urls import path
+from .views import ProductListView
+
+urlpatterns = [
+    path(
+        'products/',
+        ProductListView.as_view()
+    ),
+]
+```
+
+---
+
+# Search Request
+
+## Normal Search
+
+```bash
+/api/products/?search=iphone
+```
+
+---
+
+## Multiple Word Search
+
+```bash
+/api/products/?search=apple mobile
+```
+
+---
+
+## Search + Ordering
+
+```bash
+/api/products/?search=iphone&ordering=-price
+```
+
+---
+
+# Search Operators
+
+## Contains Search
+
+```python
+search_fields = ['title']
+```
+
+---
+
+## Exact Search
+
+```python
+search_fields = ['=title']
+```
+
+---
+
+## Starts With Search
+
+```python
+search_fields = ['^title']
+```
+
+---
+
+## Regex Search
+
+```python
+search_fields = ['$title']
+```
+
+---
+
+## Full Text Search (Postgres)
+
+```python
+search_fields = ['@title']
+```
+
+---
+
+# Global Search Setup
+
+## settings.py
+
+```python
+REST_FRAMEWORK = {
+
+    'DEFAULT_FILTER_BACKENDS': [
+        'rest_framework.filters.SearchFilter'
+    ]
+}
+```
+
+---
+
+# Example Output
+
+```json
+[
+    {
+        "id": 1,
+        "title": "iPhone 15",
+        "description": "Apple mobile",
+        "price": 90000
+    }
+]
+```
+
+---
+
+# Internal SQL Query
+
+```sql
+WHERE title LIKE '%iphone%'
+OR description LIKE '%iphone%'
+```
+
+---
+
+# Important Points
+
+## SearchFilter
+
+```python
+filter_backends = [SearchFilter]
+```
+
+Search enable karta hai.
+
+---
+
+## search_fields
+
+```python
+search_fields = ['title']
+```
+
+Batata hai search kin fields me chalega.
+
+---
+
+## Foreign Key Search
+
+```python
+search_fields = ['category__name']
+```
+
+Related model field me search.
+
+---
+
+# Summary
+
+- DRF built-in SearchFilter deta hai
+- `?search=` query use hoti hai
+- `search_fields` define karte hain
+- Multiple fields support karta hai
+- Exact / startswith / regex search possible hai
+- Foreign key field search bhi hoti hai

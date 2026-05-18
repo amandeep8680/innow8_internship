@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import Student
+from projects.web.django.models.blog.models import Student
 
 
 # Register your models here.

@@ -82,7 +82,7 @@ delete
 
 ## Types of ViewSets
 1. ViewSet
-👉 Basic (you write everything yourself)
+👉 Basyou write everythiic (ng yourself)
 
 2. GenericViewSet
 👉 Gives helper functions like:
