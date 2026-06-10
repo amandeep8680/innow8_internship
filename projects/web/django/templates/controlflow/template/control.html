@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control FLow</title>
+</head>
+<body>
+    <h1>Control Flow</h1>
+    <hr>
+    <p>Date  is : {{today}}</p>
+    <p>{{blogs.1.title}}</p>
+
+
+
+    <hr>
+
+    <!-- if else -->
+     {% if blogs.1.is_featured %}
+     <p>Featured Blog is : {{blogs.1.title}}</p>
+     {% else%}
+     <p>Not a featured blog</p>
+     {% endif%}
+
+<hr>
+
+<!--         loop -->
+
+<ul>
+    {% for blog in blogs %}
+    <li>
+        {{forloop.counter}}.{{blog.title}} - {{blog.author}}
+    </li>
+    {% empty%}
+    <li>NO blog available</li>
+    {% endfor%}
+</ul>
+
+
+
+<!-- extra self work for loop with if condition  -->
+
+{%for blog in blogs %}
+    {% if blog.is_featured %}
+        <li>{{forloop.counter}}. {{     blog.title    }}  - {{blog.author}}</li>
+    {% endif %}
+{% endfor%}
+
+
+
+
+
+<!-- with use for length -->
+
+ {% with total_blogs=blogs|length %}
+ <p>Total Length is :{{total_blogs}}</p>
+{%endwith%}
+
+
+
+<!-- cycle is used for alternatives  -->
+
+<h2>blog in table</h2>
+<table border ="2">
+{% for blog in blogs %}
+<tr st yle="background-color: {%cycle 'grey' 'skyblue' %};">
+<td>{{forloop.counter}}</td>
+<td>{{blog.title}}</td>
+<td>{{blog.author| default:"Abc"}}</td>
+<td>{{blog.is_featured}}</td>
+</tr>
+{% endfor%}
+</table>
+
+
+<hr>
+
+<!-- verbatim -->
+
+{% verbatim %}
+<P>Author :{{blog.1.title}}</P>
+{%endverbatim%}
+
+<hr>
+
+<!-- {%autoescape} -->
+
+<!-- by defualt of on-->
+
+<p>Autoescape on : {{html_code}}</p>
+<p>Autoescape off :{{html_code|safe}}</p>
+
+</body>
+</html>

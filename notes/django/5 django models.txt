@@ -1,0 +1,34 @@
+django models represents database models 
+every row and column represents in models
+
+
+
+models jo he class name se as a objct likhna hota he
+
+
+models are created in app/models.py
+here we write the model class
+ex ---          from django.db import models
+
+                # Create your models here.
+                class student(models.Model):
+                    name = models.CharField(max_length=10)
+                    age = models.IntegerField()
+                    email = models.EmailField(unique=True)
+                    enroll_date = models.DateField(auto_now_add=True)
+
+   
+
+then in terminal we run """"python3 manage.py makemigrations""""
+it basically  migrate means write table query  in the migrations folder  
+
+
+then run 
+""" python3 manage.py migrate""""
+this create table in the databasesqlite
+
+
+
+ 
+ if we make changes in the  models.py then 
+ have to run makemygrations and migrate both commands

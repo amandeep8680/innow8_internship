@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        This is database fetching in the template from the DB
+    </h1>
+
+    {% if students%}
+    <table>
+        <thead>
+         <tr>
+               <TH>ID</TH>
+            <th>NAME</th>
+            <TH>AGE</TH>
+            <TH>COMPANY</TH>
+         </tr>
+        </thead>
+        <TBODY>
+            {% for s in students %}
+            <tr>
+                <td>{{s.id}}</td>
+                <td>{{s.name}}</td>
+                <td>{{s.age}}</td>
+                <td>{{s.company}}</td>
+            </tr>
+        </TBODY>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No data is here</p>
+    {% endif%}
+</body> 
+</html>

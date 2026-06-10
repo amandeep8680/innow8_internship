@@ -1,0 +1,19 @@
+do all the things same as you do to create template html
+
+
+projet/web/models
+
+
+in views import models data 
+-  from django.shortcuts import render
+from .models import Student   /////////this importasnt importing
+
+
+# Create your views here.
+def show(request):
+    student = Student.objects.all()       ///////normal query
+    return render(request,'web.html',{'students': student}) 
+
+
+    now in html you know students.age students.name etc same as we call
+    

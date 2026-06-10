@@ -1,0 +1,87 @@
+django orm queryset
+----- A QuerySet is a collection of objects from your database.
+
+
+🔹 Think Like This
+👉 Table = Model
+👉 Row = Object
+👉 Many rows = QuerySet
+
+
+def __str__(self):
+        return self.name
+---this function is used to get human readable output from the model
+        
+
+
+
+=-=-==-=-==-==-=-==-=-==-=-=-=-=-=-=-=-=-=-=-==-==-=-=-==-=--=
+ALL / get / filter key in django shell
+
+def __str__(self):
+        return self.name
+
+
+all used to fetch alll the  database
+ex --   stud = Student.objects.all()
+        print(stud)
+
+        
+get is used to specific data
+ex --   stud = Student.objects.get(age=10)
+        print(stud)
+
+Filter is used to specific data with filter ascending or descendng or start wth 
+
+ex --   stud = Student.objects.filter(age__gt=10) // greater or equal to
+        print(stud)
+
+
+=-=-==-=-==-==-=-==-=-==-=-=-=-=-=-=-=-=-=-=-==-==-=-=-==-=--=
+
+
+
+retriving data from database ordering / exclude/values/first,last,count
+
+
+order ascending
+print(Student.objects.all().order_by("age")
+
+ddescending
+print(Student.objects.all().order_by("-age")
+
+two arguments
+print(Student.objects.all().order_by("name","-age")
+
+
+
+both retreiving filters
+print(Student.objects.all().order_by("-age").filter(age__lt=24)
+
+
+
+values to get in dictionaries
+print(Student.objects.all().values("name","company")
+
+
+exclude to exclude something
+print(Student.objects.all().exclude("company")
+
+first , last , count all are with same
+
+
+
+
+
+
+=-=-==-=-==-==-=-==-=-==-=-=-=-=-=-=-=-=-=-=-==-==-=-=-==-=--=
+Adding data in the tabke through shell
+Student.objects.create(name="Aman",age=23,city="Delhi")
+
+
+
+Deleting data 
+Student.objects.get(id=2).delete()
+or all
+Student.objects.all.delete()
+

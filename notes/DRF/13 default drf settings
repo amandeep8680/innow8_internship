@@ -1,0 +1,251 @@
+# Default DRF Settings
+
+In Django REST Framework (DRF), Default DRF Settings ka matlab hota hai:
+
+> Baar baar har view me same configuration likhne ke bajaye ek central place par DRF ki global settings define kar dena.
+
+Ye settings usually `settings.py` me hoti hain.
+
+---
+
+## Basic Structure
+
+```python
+# settings.py
+
+REST_FRAMEWORK = {
+
+}
+```
+
+Is dictionary ke andar DRF ki sari default configurations aati hain.
+
+---
+
+# Most Important Default DRF Settings
+
+---
+
+## 1. Default Authentication Classes
+
+Agar har API me authentication chahiye to baar baar:
+
+```python
+authentication_classes = [TokenAuthentication]
+```
+
+likhne ki zarurat nahi.
+
+Global setting:
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+```
+
+Ab sab APIs automatically token auth use karengi.
+
+---
+
+## 2. Default Permission Classes
+
+Har view me:
+
+```python
+permission_classes = [IsAuthenticated]
+```
+
+likhne ke bajaye:
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+```
+
+Ab sari APIs login require karengi by default.
+
+---
+
+## 3. Default Renderer Classes
+
+API browser show karna hai ya sirf JSON?
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+}
+```
+
+Isse browsable API band ho jayegi.
+
+---
+
+## 4. Default Parser Classes
+
+Request body ka data kaise parse hoga.
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
+}
+```
+
+---
+
+## 5. Pagination
+
+Automatic pagination.
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+
+    'PAGE_SIZE': 5
+}
+```
+
+Ab response:
+
+```json
+{
+   "count":20,
+   "next":"...",
+   "previous":"...",
+   "results":[]
+}
+```
+
+---
+
+## 6. Throttling (Rate Limiting)
+
+Ek user kitni requests bhej sakta hai.
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '10/minute',
+    }
+}
+```
+
+---
+
+## 7. Default Filter Backends
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ]
+}
+```
+
+---
+
+# Real Production Example
+
+```python
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+
+    'PAGE_SIZE': 10,
+}
+```
+
+---
+
+# Flow Samjho
+
+## Without Default Settings
+
+```python
+class ProductView(APIView):
+
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+```
+
+Har file me repeat karna padta hai.
+
+---
+
+## With Default Settings
+
+```python
+class ProductView(APIView):
+    pass
+```
+
+Kyuki DRF automatically `settings.py` se settings uthata hai.
+
+---
+
+# Override Bhi Kar Sakte Ho
+
+Global setting:
+
+```python
+DEFAULT_PERMISSION_CLASSES:
+IsAuthenticated
+```
+
+Lekin kisi ek view ko public banana ho:
+
+```python
+from rest_framework.permissions import AllowAny
+
+class PublicView(APIView):
+    permission_classes=[AllowAny]
+```
+
+Ye global setting ko override kar dega.
+
+---
+
+# Important Interview Line
+
+> DRF default settings are global configurations defined in `REST_FRAMEWORK` inside `settings.py` to avoid repetitive configuration across views.
+
+---
+
+# Most Asked DRF Default Settings
+
+| Setting | Purpose |
+|---|---|
+| DEFAULT_AUTHENTICATION_CLASSES | Authentication define karta |
+| DEFAULT_PERMISSION_CLASSES | Permissions define karta |
+| DEFAULT_RENDERER_CLASSES | Response format define karta |
+| DEFAULT_PARSER_CLASSES | Request parsing |
+| DEFAULT_PAGINATION_CLASS | Pagination |
+| DEFAULT_THROTTLE_CLASSES | Rate limiting |
+| DEFAULT_FILTER_BACKENDS | Filtering |

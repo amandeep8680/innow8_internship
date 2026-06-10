@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+    {%block title %} Home page {%endblock%}
+
+    {% block content %} 
+    <h1>About Page</h1>
+    <p>this is a About page bro</p>
+    <img src="{% static 'images/logo.png' %}" alt="">
+
+    <form action="POST">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder=""Username">
+
+        <input type="password" name="password" placeholder=""password">
+
+        <input type="submit" name="submit" placeholder=""submit">
+    </form>
+    <button onclick="showalert()">Click me</button>
+
+    {%endblock%}
+
+
+
+
+        {% block footer %}
+    <p> this is a about page Footer </p>
+    {%endblock%}
+

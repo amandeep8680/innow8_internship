@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="about">
+    <h1>About Me</h1>
+
+    <div class="about-container">
+        <img src="{% static 'images/me.jpeg' %}" alt="my image">
+
+        <div>
+            <p>
+                I am a passionate web developer skilled in Django, HTML, CSS, and JavaScript.
+                I enjoy building clean and user-friendly applications.
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

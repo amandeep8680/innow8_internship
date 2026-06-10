@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Check My Books</h2>
+
+    <!-- ADD BOOK -->
+    <div>
+        <input type="text" id="title" placeholder="Title">
+        <input type="text" id="author" placeholder="Author">
+        <button onclick="addBook()">Add</button>
+    </div>
+
+    <hr>
+
+    <!-- LIST OF BOOKS -->
+    <ul id="bookList"></ul>
+
+    <script>
+        const API = 'http://127.0.0.1:8000/';
+
+        // 1. GET - SHOW ALL
+        async function showBooks() {
+            const res = await fetch(API + 'list_book');
+            const data = await res.json();
+            const list = document.getElementById('bookList');
+            list.innerHTML = '';
+            data.forEach(b => {
+                list.innerHTML += `<li>${b.title} - ${b.author} 
+                    <button onclick="delBook(${b.id})">Del</button></li>`;
+            });
+        }
+
+        // 2. POST - ADD NEW
+        async function addBook() {
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            await fetch(API + 'add_book/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({title, author})
+            });
+            showBooks();
+        }
+
+        // 3. DELETE - REMOVE
+        async function delBook(id) {
+            await fetch(`${API}delete_book/${id}/`, { method: 'DELETE' });
+            showBooks();
+        }
+
+        showBooks();
+    </script>
+</body>
+</html>

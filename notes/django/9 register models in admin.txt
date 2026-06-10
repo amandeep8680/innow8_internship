@@ -1,0 +1,16 @@
+here we learn how to add models in admin panel
+and learn how admin.py works in the project
+
+after makin gmodel and migrations
+
+  
+
+projects/web/models
+
+
+in admin.py
+
+from portfolio.models import Student   importing
+
+# Register your models here.
+admin.site.register(Student)

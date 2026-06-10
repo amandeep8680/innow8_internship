@@ -1,0 +1,4 @@
+after migrations
+
+run python3 manage.py createsuperuser
+

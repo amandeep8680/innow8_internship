@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Hello, I'm a Developer</h1>
+        <p>I build modern and responsive websites</p>
+        <img src="{% static 'images/main.jpeg' %}" alt="hero image">
+    </div>
+</section>
+
+<section class="projects">
+    <h2>Featured Projects</h2>
+
+    <div class="project-grid">
+        <div class="card">
+            <img src="{% static 'images/prod1.png' %}">
+            <h3>Project 1</h3>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'images/prod2.jpeg' %}">
+            <h3>Project 2</h3>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'images/prod3.jpeg' %}">
+            <h3>Project 3</h3>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
