@@ -1,0 +1,6 @@
+#!/Users/devinnow8/Documents/innow8_internship-main/projects/practice_projects/chat_app/venv/bin/python3
+import sys
+from idna.cli import main
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+    sys.exit(main())

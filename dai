@@ -1,0 +1,25 @@
+Check 1: Kaunsa GitHub account commit karega?
+git config user.name
+git config user.email
+
+Example:
+
+Amandeep Singh
+adeepsingh2053@gmail.com
+
+To personal account use hoga.
+
+🔍 Check 2: Repo kis GitHub account par push karega?
+git remote -v
+
+Agar output:
+
+origin git@github-personal:amandeep8680/project.git
+
+→ Personal GitHub
+
+Agar:
+
+origin git@github-manager:company/project.git
+
+→ Company GitHub

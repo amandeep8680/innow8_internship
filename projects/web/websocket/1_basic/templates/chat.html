@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Chat App</h1>
+
+<input
+    type="text"
+    id="message"
+/>
+
+<button onclick="sendMessage()">
+Send
+</button>
+
+<ul id="chat-box"></ul>
+
+<script>
+
+const socket = new WebSocket(
+    "ws://127.0.0.1:8000/ws/chat/"
+);
+
+socket.onmessage = function(event){
+
+    const data =
+        JSON.parse(event.data);
+
+    const li =
+        document.createElement("li");
+
+    li.innerText =
+        data.message;
+
+    document
+        .getElementById("chat-box")
+        .appendChild(li);
+};
+
+function sendMessage(){
+
+    const msg =
+        document
+        .getElementById("message")
+        .value;
+
+    socket.send(
+        JSON.stringify({
+            message: msg
+        })
+    );
+}
+socket.onopen = function() {
+    console.log("WebSocket Connected");
+};
+
+socket.onerror = function(error) {
+    console.log("WebSocket Error:", error);
+};
+
+socket.onclose = function() {
+    console.log("WebSocket Closed");
+};
+</script>
+
+</body>
+</html>

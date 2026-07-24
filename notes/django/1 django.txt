@@ -1,6 +1,11 @@
 python3 -m venv env_name
 create environment
 
+
+daphne -p 8000 config.asgi:application
+run surevr in daphne
+
+
 lsof -i :8000
 for ports
 
@@ -12,7 +17,7 @@ source venv/bin/activate
 activate environment
 
 pip install django
-install django in env
+install django in environment 
 
 rm -rf venv
 delete environment
@@ -40,7 +45,7 @@ URL's.PY - for routing
 ASGI gateway interface for ascrhonous server
 WSGI gateway for tradition server productino development
  
--------------------------------
+= - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - =
 
 APPS FOLDER STRUCTURE:-
 MIGRATION - database schema change
@@ -53,8 +58,8 @@ VIEWS.PY - functions , classes
 MANAGE.PY - 
 
 
+= - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = 
 
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 URL BASICS
 
@@ -77,7 +82,7 @@ urlpatterns = [
 ]
 
 
-
+= - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - =
 
 2  -------------URL CNFIG--------------
 
@@ -94,6 +99,7 @@ urlpatterns = [
     path('sum/', views.sum , name='sum'),
 ]
 
+= - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - =
 
 IN porject folder add INCLUDE in import  in django's url  
 # # ---------------URL CONFIG----------------
