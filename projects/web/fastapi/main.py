@@ -18,3 +18,11 @@ def aboutme():
 
 
 
+@app.get("/users/{user_id}")
+def users(user_id: int):
+    return {
+        "Hi":user_id,
+    
+    }
+
+
