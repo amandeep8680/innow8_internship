@@ -4,6 +4,7 @@ from . import models
 from . import schemas
 from .database import engine , SessionLocal
 from sqlalchemy.orm import Session
+from passlib.context import CryptContext
 
 app = FastAPI()
 
@@ -95,3 +96,22 @@ def delete_blog(id,db : Session = Depends(get_db)):
     db.delete(blog)
     db.commit()
   
+
+
+
+
+
+
+pwd_cxt = CryptContext(schemes=["bcrypt"],deprecated = "auto")
+
+# users
+@app.post("/users/")
+def create_users(request : schemas.UserCreate ,db : Session=Depends(get_db)):
+    hashedpassword = pwd_cxt.hash(request.password)
+    new_users = models.User(name = request.name ,email = request.email , password = hashedpassword )
+    db.add(new_users)
+    db.commit()
+    db.refresh(new_users)
+    return new_users
+
+
