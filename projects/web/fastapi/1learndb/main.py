@@ -1,0 +1,97 @@
+from fastapi import FastAPI , Depends , Response , HTTPException , status
+
+from . import models
+from . import schemas
+from .database import engine , SessionLocal
+from sqlalchemy.orm import Session
+
+app = FastAPI()
+
+models.Base.metadata.create_all(bind=engine)
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.post("/blog/",
+    status_code=status.HTTP_201_CREATED)
+def create(request: schemas.Blog , db : Session = Depends(get_db)):
+    new_blog = models.Blog(title=request.title , body = request.body)
+    db.add(new_blog)
+    db.commit()
+    db.refresh(new_blog)
+    return new_blog
+
+
+@app.get("/blog/")
+def get_blogs(db : Session = Depends(get_db)):
+    blog = db.query(models.Blog).all()
+    if blog is None:
+        raise HTTPException(status_code=404,detail="Blog Not Found")
+    return blog 
+
+
+@app.get("/blog/{id}/")
+def get_blog(id, db : Session = Depends(get_db)):
+    blog = db.query(models.Blog).filter(models.Blog.id == id).first()
+    if blog is None:
+            raise HTTPException(status_code=404,detail= f"{id},Blog Not Found")
+    return blog
+
+
+## udating the blog]
+# @app.put("/blog/{id}/",status_code=status.HTTP_201_CREATED)
+# def update_blog(id:int , request : schemas.Blog, db : Session = Depends(get_db)):
+#     blog = (
+#           db.query(models.Blog).filter(models.Blog.id==id).first()
+#      )
+#     if blog is None: 
+#           raise HTTPException(
+#                status_code = status.HTTP_404_NOT_FOUND,
+#                detail="Blog not found"
+#           )
+    
+#     blog.title = request.title
+#     blog.body = request.body
+
+#     db.commit()
+#     db.refresh(blog)
+#     return blog
+
+
+## updating in a second way 
+@app.put("/blog/{id}/",status_code=status.HTTP_201_CREATED)
+def update_blog(id:int , request : schemas.Blog, db : Session = Depends(get_db)):
+    blog = ( 
+          db.query(models.Blog).filter(models.Blog.id==id)
+          
+     )
+    if blog is None: 
+          raise HTTPException(
+               status_code = status.HTTP_404_NOT_FOUND,
+               detail="Blog not found"
+          )
+    blog.update(request)
+
+    db.commit()
+    db.refresh(blog)
+    return blog
+
+
+
+# Deleting in db
+@app.delete("/blog/{id}",status_code=status.HTTP_202_ACCEPTED)
+def delete_blog(id,db : Session = Depends(get_db)):
+    blog = db.query(models.Blog).filter(models.Blog.id==id).first()
+    if blog is None: 
+        raise HTTPException(
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail="Blog not found"
+        )
+    db.delete(blog)
+    db.commit()
+  
