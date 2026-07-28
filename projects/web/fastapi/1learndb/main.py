@@ -1,5 +1,5 @@
-from fastapi import FastAPI , Depends , Response , HTTPException , status
-
+from fastapi import FastAPI , Depends ,  HTTPException , status
+from typing import List
 from . import models
 from . import schemas
 from .database import engine , SessionLocal
@@ -27,12 +27,12 @@ def create(request: schemas.Blog , db : Session = Depends(get_db)):
     return new_blog
 
 
-@app.get("/blog/")
+@app.get("/blog/",response_model = List[schemas.ShowBlog])
 def get_blogs(db : Session = Depends(get_db)):
-    blog = db.query(models.Blog).all()
-    if blog is None:
+    blogs = db.query(models.Blog).all()
+    if blogs is None:
         raise HTTPException(status_code=404,detail="Blog Not Found")
-    return blog 
+    return blogs
 
 
 @app.get("/blog/{id}/")
