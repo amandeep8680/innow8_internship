@@ -138,3 +138,38 @@ def get_user(id = int ,db:Session=Depends(get_db)):
             detail="Blog not found"
         )
     return users
+
+
+
+
+
+
+
+############################### login   ##############################################
+class Hash:
+    @staticmethod
+    def bcrypt(password: str):
+        return pwd_cxt.hash(password)
+
+    @staticmethod
+    def verify(plain_password: str, hashed_password: str):
+        return pwd_cxt.verify(plain_password, hashed_password)
+     
+
+@app.post("/login")
+def login(request:schemas.login , db : Session = Depends(get_db)):
+    
+
+    user = db.query(models.User).filter(models.User.email == request.email).first()
+    if not user:
+         raise HTTPException(
+                    status_code = status.HTTP_404_NOT_FOUND,
+                    detail="User Not Found"
+                )
+
+    if not Hash.verify(request.password, user.password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect password"
+        )
+    return user

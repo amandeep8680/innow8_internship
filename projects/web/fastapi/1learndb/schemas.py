@@ -20,6 +20,10 @@ class UserCreate(BaseModel):
     
 
 
+class login(BaseModel):
+     email:str
+     password : str
+     
 class ShowUser(BaseModel):
  
     name: str
@@ -36,3 +40,5 @@ class ShowBlog(BaseModel):
     creator :ShowUser
     class config():
         orm_mode=True
+
+
