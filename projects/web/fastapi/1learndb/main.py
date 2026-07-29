@@ -19,9 +19,9 @@ def get_db():
         db.close()
 
 @app.post("/blog/",
-    status_code=status.HTTP_201_CREATED , tags=['blog'])
+    status_code=status.HTTP_201_CREATED )
 def create(request: schemas.Blog , db : Session = Depends(get_db)):
-    new_blog = models.Blog(title=request.title , body = request.body)
+    new_blog = models.Blog(title=request.title , body = request.body , user_id = 1)
     db.add(new_blog)
     db.commit()
     db.refresh(new_blog)
@@ -36,7 +36,7 @@ def get_blogs(db : Session = Depends(get_db)):
     return blogs
 
 
-@app.get("/blog/{id}/")
+@app.get("/blog/{id}/",response_model = List[schemas.ShowBlog])
 def get_blog(id, db : Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
     if blog is None:
