@@ -19,7 +19,7 @@ def get_db():
         db.close()
 
 @app.post("/blog/",
-    status_code=status.HTTP_201_CREATED)
+    status_code=status.HTTP_201_CREATED , tags=['blog'])
 def create(request: schemas.Blog , db : Session = Depends(get_db)):
     new_blog = models.Blog(title=request.title , body = request.body)
     db.add(new_blog)
@@ -105,7 +105,7 @@ def delete_blog(id,db : Session = Depends(get_db)):
 pwd_cxt = CryptContext(schemes=["bcrypt"],deprecated = "auto")
 
 # users
-@app.post("/users/")
+@app.post("/users/",response_model=schemas.ShowUser)
 def create_users(request : schemas.UserCreate ,db : Session=Depends(get_db)):
     hashedpassword = pwd_cxt.hash(request.password)
     new_users = models.User(name = request.name ,email = request.email , password = hashedpassword )
@@ -115,3 +115,26 @@ def create_users(request : schemas.UserCreate ,db : Session=Depends(get_db)):
     return new_users
 
 
+
+
+## Getting Users
+@app.get("/users/",response_model=List[schemas.ShowUser])
+def get_users(db:Session=Depends(get_db)):
+    users  = db.query(models.User).all()
+    if not users:
+        raise HTTPException(
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail="Blog not found"
+        )
+    return users
+
+
+@app.get("/users/{id}",response_model=schemas.ShowUser)
+def get_user(id = int ,db:Session=Depends(get_db)):
+    users  = db.query(models.User).filter(models.User.id == id).first()
+    if not users:
+        raise HTTPException(
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail="Blog not found"
+        )
+    return users

@@ -16,3 +16,9 @@ class UserCreate(BaseModel):
     email:str
     password : str
     
+
+
+class ShowUser(BaseModel):
+    id : int
+    name: str
+    email : str
