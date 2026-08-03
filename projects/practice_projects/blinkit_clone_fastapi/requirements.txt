@@ -1,0 +1,31 @@
+uvicorn
+fastapi 
+sqlalchemy
+psycopg[binary]
+python-dotenv
+alembic
+pydantic
+email-validator
+passlib[bcrypt]
+bcrypt==4.0.1
+
+# blinkit-backend/
+# │
+# ├── venv/
+# ├── requirements.txt
+# ├── .env
+# ├── alembic/
+# │
+# ├── app/.                  
+# │   ├── main.py
+# │   ├── core/
+# │   ├── database/
+# │   ├── models/
+# │   ├── schemas/
+# │   ├── repositories/
+# │   ├── services/
+# │   ├── routes/
+# │   └── utils/
+# │
+# └── tests/
+
