@@ -3,7 +3,11 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from contextlib import asynccontextmanager
 from app.database.database import engine
-from app.routes.user_routes import router as user_routes
+from app.routes.user_routes import router as user_routes 
+from app.routes.branchmanager_routes import router as branchmanager_routes
+from app.routes.branches import router as branches 
+
+
 ## testing database connection
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -19,7 +23,9 @@ async def lifespan(app: FastAPI):
 ## creating instance of the app
 app = FastAPI(
     title="Blinkit API's",
-    lifespan=lifespan
+    # lifespan=lifespan     ## Initializes app resources (e.g., database connection) on startup.
 )
 
 app.include_router(user_routes)
+app.include_router(branchmanager_routes)
+app.include_router(branches)

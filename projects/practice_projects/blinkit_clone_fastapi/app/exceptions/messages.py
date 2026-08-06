@@ -8,3 +8,5 @@ BRANCH_MANAGER_ALREADY_EXISTS = "Branch Manager already exists."
 
 # Branch Messages
 BRANCH_NOT_FOUND = "Branch not found."
+BRANCH_ALREADY_EXISTS = "Branch already exists."
+

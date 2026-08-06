@@ -39,6 +39,8 @@ class BranchManager(Base):
     __tablename__ = "branch_managers"
     id = Column(Integer, primary_key=True, index=True)
 
+    unique_id = Column(String(20),nullable=False , unique=True)
+
     name = Column(String(100), nullable=False)
 
     email = Column(String(255), unique=True, nullable=False, index=True)
@@ -63,6 +65,7 @@ class BranchManager(Base):
         "Branches",
         back_populates="manager",
         uselist=False
+        
     )
 
 class Branches(Base):
@@ -71,6 +74,8 @@ class Branches(Base):
     __tablename__ = 'branches'
 
     id = Column(Integer, primary_key=True, index=True)
+
+    branch_unique_id = Column(String(30), nullable=False , unique=True)
 
     name = Column(String(100), nullable=False)
    
@@ -92,6 +97,6 @@ class Branches(Base):
            server_default=func.now(),
            onupdate=func.now()
        )
-    branch_id = Column(Integer, ForeignKey("branch_managers.id"))
+    manager_id = Column(String, ForeignKey("branch_managers.unique_id"),unique=True)
 
     manager = relationship("BranchManager", back_populates="branch")

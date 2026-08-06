@@ -8,6 +8,8 @@ pwd_context  = CryptContext(
 )
 
 
+
+
 def hash_password(password : str) ->str:
     ''' Function to convert plain password into hash password'''
 
